@@ -1,4 +1,4 @@
-pip install gputil
+
 import GPUtil
 from tabulate import tabulate
 
