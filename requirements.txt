@@ -2,7 +2,6 @@ gputil
 psutil
 opencv-contrib-python==3.4.13.47
 numpy
-glob
-random
+
 
 
