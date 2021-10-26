@@ -18,7 +18,7 @@ class readnet_webimage_detector:
     # The images could be in a jpg or png format
     self.images_path = glob.glob(str(path)+"/*.jpg") + glob.glob(str(path)+"/*.png") 
 
-  def get_objects(self, threshold = 0.3): 
+  def get_objects(self, threshold = 0.3, resize = False): 
 
     layer_names = self.net.getLayerNames()
     output_layers = [layer_names[i[0] - 1] for i in self.net.getUnconnectedOutLayers()]
@@ -35,11 +35,13 @@ class readnet_webimage_detector:
       # Loading image
       img = cv2.imread(img_path) # img is a numpy array 
       
-      # img = cv2.resize(img, None, fx=0.4, fy=0.4)
+      if resize == True: 
+        img = cv2.resize(img, None, fx=0.4, fy=0.4)
+        
       height, width, channels = img.shape
 
       # Detecting objects
-      blob = cv2.dnn.blobFromImage(img, 1, (416, 416), (0, 0, 0), True, crop=False) # This is also a numpy array 
+      blob = cv2.dnn.blobFromImage(img, 0.00392, (416, 416), (0, 0, 0), True, crop=False) # This is also a numpy array 
 
       self.net.setInput(blob)
       outs = self.net.forward(output_layers)
